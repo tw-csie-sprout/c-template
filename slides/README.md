@@ -8,7 +8,7 @@
 ```bash
 git clone git@github.com:tw-csie-sprout/c-template.git
 cd c-template/slides
-docker build -t . sproutc-xelatex
+docker build -t sproutc-xelatex .
 ```
 
 ## Compile your tex file
