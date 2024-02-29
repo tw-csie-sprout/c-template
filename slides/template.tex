@@ -10,7 +10,7 @@
 \usepackage{appendixnumberbeamer}
 
 %% Usefull packages
-\usepackage{amsmath,bm,amsfonts,amssymb,enumerate,epsfig,calc,color,ifthen,capt-of,multimedia,hyperref}
+\usepackage{amsmath,bm,amsfonts,amssymb,enumerate,epsfig,calc,color,ifthen,capt-of,multimedia,hyperref,listings,array}
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -19,13 +19,22 @@
 \usepgfplotslibrary{dateplot}
 
 \usepackage{xspace}
+
+% delete line
+\usepackage[normalem]{ulem}
+
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+% tikz libraries
+\usetikzlibrary{arrows.meta}
 
 \definecolor{Primary1}{HTML}{B9EDDD}
 \definecolor{Primary2}{HTML}{87CBB9}
 \definecolor{Primary3}{HTML}{569DAA}
 \definecolor{Primary4}{HTML}{577D86}
 \definecolor{AlertRed}{HTML}{DC8686}
+\definecolor{BlockBody}{HTML}{E5E7E7}
+\definecolor{LstIdentifier}{HTML}{E69138}
 
 \setbeamercolor{example text}{fg=Primary3}
 
@@ -42,3 +51,19 @@
 
 \setlength{\metropolis@blocksep}{0.75ex}
 \metroset{block=fill}
+
+% lst config
+\lstdefinestyle{cppStyle}{
+  backgroundcolor=\color{BlockBody},
+    basicstyle=\ttfamily,
+    frame=leftline,
+    framerule=2pt,
+    rulecolor=\color{Primary2},
+    language=c++,
+    keywordstyle=\color{Primary4},
+    identifierstyle=\color{LstIdentifier},
+    commentstyle=\color{Primary2},
+    breaklines=true,
+}
+
+\lstset{style=cppStyle}
