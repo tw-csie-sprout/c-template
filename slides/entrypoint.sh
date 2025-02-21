@@ -8,27 +8,31 @@ fi
 
 # Run xelatex on the specified LaTeX file
 base=$(basename "$1" .tex)
-newname="$base""_$(cat /dev/urandom | head -c 4 | base64).tex"
-cp "/output/$1" "/$newname"
-mv /template.tex "/$1"
-echo -e '\\begin{document}\n\t\\input{'"/$newname"'}\n\\end{document}' >> "/$1"
-cd /output
+
+# Copy every file to /temp directory
+cp -r "/output" "/temp"
+
+# Create template.tex for compiling
+cp /template.tex "/temp/template.tex"
+echo -e '\\begin{document}\n\t\\input{'"/temp/$1"'}\n\\end{document}' >> "/temp/template.tex"
+
 
 echo -e "\nCompiling $1 ..."
 
 # Compile twice is necessary for ToC
-xelatex -shell-escape -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /dev/null
-xelatex -shell-escape -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /output/log.txt
+cd /temp
+xelatex -shell-escape -synctex=1 -interaction=nonstopmode "/temp/template.tex" > /dev/null
+xelatex -shell-escape -synctex=1 -interaction=nonstopmode "/temp/template.tex" > /dev/null
+
+# Change the name back to base.pdf, and copy output and log.txt to user folder
+mv "/temp/template.pdf" "/temp/$base.pdf"
+cp "/temp/$base.pdf" "/output/"
+cp /temp/template.log "/output/$base.log"
+
 
 if [ $? -eq 0 ]; then
     echo "Command was successful."
-    echo "Feel free to check log.txt for logs."
-    # Remove all the auxiliary files
-    rm -rf /output/*.toc /output/*.synctex.gz /output/*.out
-    rm -rf /output/*.log /output/*.run.xml
-    rm -rf /output/*.nav /output/*.snm
-    rm -rf /output/*.vrb
-    rm -rf /output/*.aux
+    echo "Feel free to check $base.log for logs."
 else
     echo "Command failed with an error"
     echo "Please check log.txt for more details."

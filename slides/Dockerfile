@@ -45,6 +45,7 @@ RUN apt-get install -y inkscape unzip curl && \
     curl -L -o /tmp/twemojis.zip https://github.com/twitter/twemoji/archive/refs/tags/v14.0.2.zip && \
     unzip /tmp/twemojis.zip -d /tmp && \
     mv /tmp/twemoji-14.0.2/assets/svg /twemojis && \
+    chmod -R 755 /twemojis && \
     rm -rf /tmp/twemojis.zip /var/lib/apt/lists/*
 
 # Cleanup unnecessary files to reduce image size
