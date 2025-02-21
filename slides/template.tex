@@ -1,39 +1,90 @@
-\documentclass[10pt]{beamer}
+\documentclass[12pt, aspectratio=169]{beamer}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{listings}
+
+% Use twemojis svg assets
+\usepackage{svg}
+\newcommand{\emoji}[1]{%
+  \ \includesvg[height=0.9em]{/twemojis/#1.svg}%
+}
+% Suppress inkscape unnecessary output
+\svgsetup{
+    inkscapeexe=sh -c "inkscape 2>/dev/null",
+    inkscapeversion=1
+}
+
 
 %% For Chinese Fonts
 \usepackage{xeCJK}
-\setCJKmainfont{Noto Sans Mono CJK TC}
+\setCJKmainfont{Noto Sans Mono CJK TC}[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  % FontFace={l}{n}{*-Light},
+  % FontFace={mb}{n}{*-Medium},
+  % FontFace={k}{n}{*-Black},
+]
 %% \setCJKmainfont{WenQuanYi Micro Hei}
-\usepackage{fontspec}
 
 \usetheme[progressbar=frametitle]{metropolis}
+
+\setstretch{1.25} 
+\usepackage{parskip}
+\setlength{\parskip}{0.5em}
+\setsansfont{IBM Plex Sans}
+
+%% Use DejaVu Fonts for emojis
+\newfontfamily{\DejaVuSans}{DejaVu Sans}
+\newfontfamily{\DejaVuSansMono}{DejaVu Sans Mono}
+\newfontfamily{\DejaVuSerif}{DejaVu Serif}
+
+
 \usepackage{appendixnumberbeamer}
-
-%% Usefull packages
-\usepackage{amsmath,bm,amsfonts,amssymb,enumerate,epsfig,calc,color,ifthen,capt-of,multimedia,hyperref}
-
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 
+%% Useful packages
+\usepackage{amsmath,bm,amsfonts,amssymb,enumerate,epsfig,calc,color,ifthen,capt-of,multimedia,listings,array}
+
+\makeatletter
+\def\mdseries@sf{m} % el l m sb b eb
+\def\bfseries@sf{sb} % el l m sb b eb
+\makeatother
+
+
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
-
 \usepackage{xspace}
-\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\newcommand{\themename}{\textsc{metropolis}\xspace}
+\setbeamerfont{title}{series=\mdseries}
+\setbeamerfont{frametitle}{series=\mdseries}
+\setbeamerfont{block title}{series=\mdseries}
+\setbeamerfont{block title example}{series=\mdseries}
+\setbeamerfont{block title alerted}{series=\mdseries}
+\setbeamerfont{section title}{series=\mdseries}
+
+
 
 \definecolor{Primary1}{HTML}{B9EDDD}
 \definecolor{Primary2}{HTML}{87CBB9}
 \definecolor{Primary3}{HTML}{569DAA}
 \definecolor{Primary4}{HTML}{577D86}
 \definecolor{AlertRed}{HTML}{DC8686}
+\definecolor{Grey}{HTML}{F6F6F6}
+\definecolor{links}{HTML}{577D86}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
 
 \setbeamercolor{example text}{fg=Primary3}
-
 \setbeamercolor{frametitle}{bg=Primary4}
 \setbeamercolor{progress bar}{fg=Primary2, bg=Primary1}
 
 \setbeamercolor{block title example}{bg=Primary3, fg=white}
 \setbeamercolor{block title alerted}{bg=AlertRed, fg=white}
+%%\setbeamercolor{block body example}{bg=Grey}
+%%\setbeamercolor{block body alerted}{bg=Grey}
+
 
 \makeatletter
 \setlength{\metropolis@progressinheadfoot@linewidth}{2pt}

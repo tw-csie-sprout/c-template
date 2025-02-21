@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 LABEL maintainer="iceylemon"
 
-ENV TZ Asia/Taipei
+ENV TZ=Asia/Taipei
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
 RUN apt-get install -y tzdata git
@@ -32,15 +32,31 @@ RUN cd ccicons && make install && texhash && updmap --sys --enable Map=ccicons.m
 # RUN apt-get install -y texlive-fonts-recommended
 # RUN apt-get install -y texlive-fonts-extra
 
+# Add ibm plex sans font and fonts-noto-color-emoji (for emojis)
+RUN apt-get install -y fonts-ibm-plex fonts-dejavu && fc-cache -f -v
+
+# Install Python and Pygments via pip (to ensure pygmentize is available)
+RUN apt-get install -y python3 python3-pip && \
+    pip3 install --upgrade pip && \
+    pip3 install Pygments
+
+# Install necessary tools for LaTeX and manual twemoji installation
+RUN apt-get install -y inkscape unzip curl && \
+    curl -L -o /tmp/twemojis.zip https://github.com/twitter/twemoji/archive/refs/tags/v14.0.2.zip && \
+    unzip /tmp/twemojis.zip -d /tmp && \
+    mv /tmp/twemoji-14.0.2/assets/svg /twemojis && \
+    rm -rf /tmp/twemojis.zip /var/lib/apt/lists/*
+
 # Cleanup unnecessary files to reduce image size
-# Doesn't seem to work? - iceylemon
-# RUN apt-get autoremove -y && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/* /usr/src/app/*.log /usr/src/app/*.aux
+RUN apt-get autoremove -y && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/src/app/*.log /usr/src/app/*.aux
+
 
 COPY entrypoint.sh /entrypoint.sh
 COPY template.tex /template.tex
 RUN chmod +x /entrypoint.sh
 VOLUME [ "/output" ]
 
+
+# CMD [ "/bin/bash" ]
 ENTRYPOINT [ "/entrypoint.sh" ]

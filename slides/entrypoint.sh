@@ -14,9 +14,11 @@ mv /template.tex "/$1"
 echo -e '\\begin{document}\n\t\\input{'"/$newname"'}\n\\end{document}' >> "/$1"
 cd /output
 
+echo -e "\nCompiling $1 ..."
+
 # Compile twice is necessary for ToC
-xelatex -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /dev/null
-xelatex -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /output/log.txt
+xelatex -shell-escape -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /dev/null
+xelatex -shell-escape -synctex=1 -interaction=nonstopmode -output-directory=/output "/$1" > /output/log.txt
 
 if [ $? -eq 0 ]; then
     echo "Command was successful."
