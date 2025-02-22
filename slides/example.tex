@@ -306,7 +306,38 @@ or show \textbf{bold} results.\end{verbatim}
   \begin{itemize}
     \item Emoji 的使用方式：\textbackslash emoji\{emoji 的 utf encoding\}
     \item 舉個\emoji{1f330}：這是一隻狐狸\emoji{1f98a}
-    \item aaa
   \end{itemize}
 \end{frame}
 
+\section[Code 的使用方式]{Code 的使用方式}
+\begin{frame}[<+->]
+  \frametitle{Code 的使用方式}
+  \begin{itemize}
+    \item 使用 minted 套件
+    \item 可以用 \textbackslash mintinline\{cpp\}\{程式碼\} 來放 inline 程式碼
+    \begin{itemize}
+      \item 例如：\mintinline{cpp}{cout << "Hello World!" << endl};
+      \item Note: mintinline 好像對某些符號的支援較差，如 「\textbackslash」 跟「大括號」，pdf 做出來會有紅色方塊
+      \item 如果有人知道怎麼解決可以發個 PR 加在範例，感謝！
+    \end{itemize}
+    \item 如果是程式碼區塊(要換行)，參考下一頁投影片
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Code 的使用方式}
+  記得 frame 的參數要加上 [fragile]
+  \begin{minted}[
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+  ]{cpp}
+#include<iostream>
+using namespace std;
+int main() {
+    cout << "\\('U`*)9" << endl;
+    int num = 123;
+}
+  \end{minted}
+\end{frame}
